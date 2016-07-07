@@ -4,18 +4,19 @@ from django.db import models
 
 # Create your models here.
 class List(models.Model):
-    userid = models.ForeignKey(User, on_delete=models.CASCADE)
-    listid = models.CharField(max_length=250)
-    listname = models.CharField(max_length=250)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    list_title = models.CharField(max_length=250)
 
     def __str__(self):
-        return self.listid + '   ' + self.listname
+        return self.list_title
 
 class Task(models.Model):
-    listid = models.ForeignKey(List, on_delete=models.CASCADE)
-    taskid = models.CharField(max_length=250)
-    taskname = models.CharField(max_length=250)
-    taskdesc = models.CharField(max_length=1000)
-    tasktype = models.CharField(max_length=250)
-    duedate = models.DateField(max_length=250)
+    list = models.ForeignKey(List, on_delete=models.CASCADE)
+    task_title = models.CharField(max_length=250)
+    task_desc = models.CharField(max_length=1000)
+    task_type = models.CharField(max_length=250)
+    due_date = models.DateField(max_length=250)
     priority = models.IntegerField()
+
+    def __str__(self):
+        return self.task_title

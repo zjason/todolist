@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Todo list</title>
+</head>
+<body>
+    {% if all_list %}
+        <ul>
+            {% for list in all_list %}
+            <li><a href="/todolist/{{ list.id }}/">{{ list.list_title }}</a></li>
+            {% endfor %}
+        </ul>
+    {% else %}
+    <h3>There is no list</h3>
+    {%  endif %}
+</body>
+</html>

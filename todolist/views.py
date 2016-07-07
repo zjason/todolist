@@ -1,17 +1,21 @@
 from django.shortcuts import render
 from django.http import HttpResponse
-from .models import List
+from .models import List,Task
+from django.template import loader
 
 # Create your views here.
 def index(request):
     all_list = List.objects.all()
-    html = '<h1>This is your to do list</h1>'
+    template = loader.get_template('todolist/index.html')
+    context = {
+        'all_list': all_list,
+    }
 
-    for list in all_list:
-        url = '/todolist/' + str(list.id)+'/'
-        html += '<a href="' + url + '">' + list.listname + '</a><br>'
-
-    return HttpResponse(html)
+    return HttpResponse(template.render(context,request))
 
 def detail(request, list_id):
-    return HttpResponse("<h1>This is todolist:"+list_id+"</ht>")
+    html = '<h1>Task in list: '+list_id+'<h1>'
+    all_task = Task.objects.all()
+    for task in all_task:
+        html += 'task id: ' + str(task.id) + ' task name: ' + task.task_desc
+    return HttpResponse(html)
